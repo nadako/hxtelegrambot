@@ -1,0 +1,667 @@
+User
+This object represents a Telegram user or bot.
+
+Field	Type	Description
+id	Integer	Unique identifier for this user or bot
+first_name	String	User‘s or bot’s first name
+last_name	String	Optional. User‘s or bot’s last name
+username	String	Optional. User‘s or bot’s username
+Chat
+This object represents a chat.
+
+Field	Type	Description
+id	Integer	Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+type	String	Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+title	String	Optional. Title, for supergroups, channels and group chats
+username	String	Optional. Username, for private chats, supergroups and channels if available
+first_name	String	Optional. First name of the other party in a private chat
+last_name	String	Optional. Last name of the other party in a private chat
+all_members_are_administrators	Boolean	Optional. True if a group has ‘All Members Are Admins’ enabled.
+Message
+This object represents a message.
+
+Field	Type	Description
+message_id	Integer	Unique message identifier
+from	User	Optional. Sender, can be empty for messages sent to channels
+date	Integer	Date the message was sent in Unix time
+chat	Chat	Conversation the message belongs to
+forward_from	User	Optional. For forwarded messages, sender of the original message
+forward_from_chat	Chat	Optional. For messages forwarded from a channel, information about the original channel
+forward_date	Integer	Optional. For forwarded messages, date the original message was sent in Unix time
+reply_to_message	Message	Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+edit_date	Integer	Optional. Date the message was last edited in Unix time
+text	String	Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters.
+entities	Array of MessageEntity	Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+audio	Audio	Optional. Message is an audio file, information about the file
+document	Document	Optional. Message is a general file, information about the file
+game	Game	Optional. Message is a game, information about the game. More about games »
+photo	Array of PhotoSize	Optional. Message is a photo, available sizes of the photo
+sticker	Sticker	Optional. Message is a sticker, information about the sticker
+video	Video	Optional. Message is a video, information about the video
+voice	Voice	Optional. Message is a voice message, information about the file
+caption	String	Optional. Caption for the document, photo or video, 0-200 characters
+contact	Contact	Optional. Message is a shared contact, information about the contact
+location	Location	Optional. Message is a shared location, information about the location
+venue	Venue	Optional. Message is a venue, information about the venue
+new_chat_member	User	Optional. A new member was added to the group, information about them (this member may be the bot itself)
+left_chat_member	User	Optional. A member was removed from the group, information about them (this member may be the bot itself)
+new_chat_title	String	Optional. A chat title was changed to this value
+new_chat_photo	Array of PhotoSize	Optional. A chat photo was change to this value
+delete_chat_photo	True	Optional. Service message: the chat photo was deleted
+group_chat_created	True	Optional. Service message: the group has been created
+supergroup_chat_created	True	Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
+channel_chat_created	True	Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
+migrate_to_chat_id	Integer	Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+migrate_from_chat_id	Integer	Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+pinned_message	Message	Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+MessageEntity
+This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
+
+Field	Type	Description
+type	String	Type of the entity. Can be mention (@username), hashtag, bot_command, url, email, bold (bold text), italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs), text_mention (for users without usernames)
+offset	Integer	Offset in UTF-16 code units to the start of the entity
+length	Integer	Length of the entity in UTF-16 code units
+url	String	Optional. For “text_link” only, url that will be opened after user taps on the text
+user	User	Optional. For “text_mention” only, the mentioned user
+PhotoSize
+This object represents one size of a photo or a file / sticker thumbnail.
+
+Field	Type	Description
+file_id	String	Unique identifier for this file
+width	Integer	Photo width
+height	Integer	Photo height
+file_size	Integer	Optional. File size
+Audio
+This object represents an audio file to be treated as music by the Telegram clients.
+
+Field	Type	Description
+file_id	String	Unique identifier for this file
+duration	Integer	Duration of the audio in seconds as defined by sender
+performer	String	Optional. Performer of the audio as defined by sender or by audio tags
+title	String	Optional. Title of the audio as defined by sender or by audio tags
+mime_type	String	Optional. MIME type of the file as defined by sender
+file_size	Integer	Optional. File size
+Document
+This object represents a general file (as opposed to photos, voice messages and audio files).
+
+Field	Type	Description
+file_id	String	Unique file identifier
+thumb	PhotoSize	Optional. Document thumbnail as defined by sender
+file_name	String	Optional. Original filename as defined by sender
+mime_type	String	Optional. MIME type of the file as defined by sender
+file_size	Integer	Optional. File size
+Sticker
+This object represents a sticker.
+
+Field	Type	Description
+file_id	String	Unique identifier for this file
+width	Integer	Sticker width
+height	Integer	Sticker height
+thumb	PhotoSize	Optional. Sticker thumbnail in .webp or .jpg format
+emoji	String	Optional. Emoji associated with the sticker
+file_size	Integer	Optional. File size
+Video
+This object represents a video file.
+
+Field	Type	Description
+file_id	String	Unique identifier for this file
+width	Integer	Video width as defined by sender
+height	Integer	Video height as defined by sender
+duration	Integer	Duration of the video in seconds as defined by sender
+thumb	PhotoSize	Optional. Video thumbnail
+mime_type	String	Optional. Mime type of a file as defined by sender
+file_size	Integer	Optional. File size
+Voice
+This object represents a voice note.
+
+Field	Type	Description
+file_id	String	Unique identifier for this file
+duration	Integer	Duration of the audio in seconds as defined by sender
+mime_type	String	Optional. MIME type of the file as defined by sender
+file_size	Integer	Optional. File size
+Contact
+This object represents a phone contact.
+
+Field	Type	Description
+phone_number	String	Contact's phone number
+first_name	String	Contact's first name
+last_name	String	Optional. Contact's last name
+user_id	Integer	Optional. Contact's user identifier in Telegram
+Location
+This object represents a point on the map.
+
+Field	Type	Description
+longitude	Float	Longitude as defined by sender
+latitude	Float	Latitude as defined by sender
+Venue
+This object represents a venue.
+
+Field	Type	Description
+location	Location	Venue location
+title	String	Name of the venue
+address	String	Address of the venue
+foursquare_id	String	Optional. Foursquare identifier of the venue
+UserProfilePhotos
+This object represent a user's profile pictures.
+
+Field	Type	Description
+total_count	Integer	Total number of profile pictures the target user has
+photos	Array of Array of PhotoSize	Requested profile pictures (in up to 4 sizes each)
+File
+This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile.
+
+Maximum file size to download is 20 MB
+Field	Type	Description
+file_id	String	Unique identifier for this file
+file_size	Integer	Optional. File size, if known
+file_path	String	Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
+ReplyKeyboardMarkup
+This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).
+
+Field	Type	Description
+keyboard	Array of Array of KeyboardButton	Array of button rows, each represented by an Array of KeyboardButton objects
+resize_keyboard	Boolean	Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.
+one_time_keyboard	Boolean	Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false.
+selective	Boolean	Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+
+Example: A user requests to change the bot‘s language, bot replies to the request with a keyboard to select the new language. Other users in the group don’t see the keyboard.
+KeyboardButton
+This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields are mutually exclusive.
+
+Field	Type	Description
+text	String	Text of the button. If none of the optional fields are used, it will be sent to the bot as a message when the button is pressed
+request_contact	Boolean	Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
+request_location	Boolean	Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only
+Note: request_contact and request_location options will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+ReplyKeyboardHide
+Upon receiving a message with this object, Telegram clients will hide the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup).
+
+Field	Type	Description
+hide_keyboard	True	Requests clients to hide the custom keyboard
+selective	Boolean	Optional. Use this parameter if you want to hide keyboard for specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+
+Example: A user votes in a poll, bot returns confirmation message in reply to the vote and hides keyboard for that user, while still showing the keyboard with poll options to users who haven't voted yet.
+InlineKeyboardMarkup
+This object represents an inline keyboard that appears right next to the message it belongs to.
+
+Field	Type	Description
+inline_keyboard	Array of Array of InlineKeyboardButton	Array of button rows, each represented by an Array of InlineKeyboardButton objects
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will display unsupported message.
+
+InlineKeyboardButton
+This object represents one button of an inline keyboard. You must use exactly one of the optional fields.
+
+Field	Type	Description
+text	String	Label text on the button
+url	String	Optional. HTTP url to be opened when button is pressed
+callback_data	String	Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+switch_inline_query	String	Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.
+
+Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.
+switch_inline_query_current_chat	String	Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
+
+This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+callback_game	CallbackGame	Optional. Description of the game that will be launched when the user presses the button.
+
+NOTE: This type of button must always be the first button in the first row.
+CallbackQuery
+This object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
+
+Field	Type	Description
+id	String	Unique identifier for this query
+from	User	Sender
+message	Message	Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
+inline_message_id	String	Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
+chat_instance	String	Identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
+data	String	Optional. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
+game_short_name	String	Optional. Short name of a Game to be returned, serves as the unique identifier for the game
+NOTE: After the user presses an inline button, Telegram clients will display a progress bar until you call answerCallbackQuery. It is, therefore, necessary to react by calling answerCallbackQuery even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
+ForceReply
+Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+
+Field	Type	Description
+force_reply	True	Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'
+selective	Boolean	Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
+Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
+Guide the user through a step-by-step process. ‘Please send me your question’, ‘Cool, now let’s add the first answer option‘, ’Great. Keep adding answer options, then send /done when you‘re ready’.
+The last option is definitely more attractive. And if you use ForceReply in your bot‘s questions, it will receive the user’s answers even if it only receives replies, commands and mentions — without any extra work for the user.
+
+ChatMember
+This object contains information about one member of the chat.
+
+Field	Type	Description
+user	User	Information about the user
+status	String	The member's status in the chat. Can be “creator”, “administrator”, “member”, “left” or “kicked”
+ResponseParameters
+Contains information about why a request was unsuccessfull.
+
+Field	Type	Description
+migrate_to_chat_id	Integer	Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+retry_after	Integer	Optional. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
+InputFile
+This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.
+
+Sending files
+There are three ways to send files (photos, stickers, audio, media, etc.):
+
+If the file is already stored somewhere on the Telegram servers, you don't need to reupload it: each file object has a file_id field, simply pass this file_id as a parameter instead of uploading. There are no limits for files sent this way.
+Provide Telegram with an HTTP URL for the file to be sent. Telegram will download and send the file. 5 MB max size for photos and 20 MB max for other types of content.
+Post the file using multipart/form-data in the usual way that files are uploaded via the browser. 10 MB max size for photos, 50 MB for other files.
+Note:
+
+It is not possible to change the file type when resending by file_id. I.e. a video can't be sent as a photo, a photo can't be sent as a document, etc.
+It is not possible to resend thumbnails.
+Resending a photo by file_id will send all of its sizes.
+file_id can't be transferred from one bot to another.
+Game
+This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
+
+Field	Type	Description
+title	String	Title of the game
+description	String	Description of the game
+photo	Array of PhotoSize	Photo that will be displayed in the game message in chats.
+text	String	Optional. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls setGameScore, or manually edited using editMessageText. 0-4096 characters.
+text_entities	Array of MessageEntity	Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
+animation	Animation	Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
+Animation
+You can provide an animation for your game so that it looks stylish in chats (check out Lumberjack for an example). This object represents an animation file to be displayed in the message containing a game.
+
+Field	Type	Description
+file_id	String	Unique file identifier
+thumb	PhotoSize	Optional. Animation thumbnail as defined by sender
+file_name	String	Optional. Original animation filename as defined by sender
+mime_type	String	Optional. MIME type of the file as defined by sender
+file_size	Integer	Optional. File size
+CallbackGame
+A placeholder, currently holds no information. Use BotFather to set up your game.
+Field	Type	Description
+Update
+This object represents an incoming update.
+Only one of the optional parameters can be present in any given update.
+
+Field	Type	Description
+update_id	Integer	The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
+message	Message	Optional. New incoming message of any kind — text, photo, sticker, etc.
+edited_message	Message	Optional. New version of a message that is known to the bot and was edited
+inline_query	InlineQuery	Optional. New incoming inline query
+chosen_inline_result	ChosenInlineResult	Optional. The result of an inline query that was chosen by a user and sent to their chat partner.
+callback_query	CallbackQuery	Optional. New incoming callback query
+InlineQuery
+This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
+
+Field	Type	Description
+id	String	Unique identifier for this query
+from	User	Sender
+location	Location	Optional. Sender location, only for bots that request user location
+query	String	Text of the query (up to 512 characters)
+offset	String	Offset of the results to be returned, can be controlled by the bot
+InlineQueryResult
+This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
+
+InlineQueryResultCachedAudio
+InlineQueryResultCachedDocument
+InlineQueryResultCachedGif
+InlineQueryResultCachedMpeg4Gif
+InlineQueryResultCachedPhoto
+InlineQueryResultCachedSticker
+InlineQueryResultCachedVideo
+InlineQueryResultCachedVoice
+InlineQueryResultArticle
+InlineQueryResultAudio
+InlineQueryResultContact
+InlineQueryResultGame
+InlineQueryResultDocument
+InlineQueryResultGif
+InlineQueryResultLocation
+InlineQueryResultMpeg4Gif
+InlineQueryResultPhoto
+InlineQueryResultVenue
+InlineQueryResultVideo
+InlineQueryResultVoice
+InlineQueryResultArticle
+Represents a link to an article or web page.
+
+Field	Type	Description
+type	String	Type of the result, must be article
+id	String	Unique identifier for this result, 1-64 Bytes
+title	String	Title of the result
+input_message_content	InputMessageContent	Content of the message to be sent
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+url	String	Optional. URL of the result
+hide_url	Boolean	Optional. Pass True, if you don't want the URL to be shown in the message
+description	String	Optional. Short description of the result
+thumb_url	String	Optional. Url of the thumbnail for the result
+thumb_width	Integer	Optional. Thumbnail width
+thumb_height	Integer	Optional. Thumbnail height
+InlineQueryResultPhoto
+Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
+
+Field	Type	Description
+type	String	Type of the result, must be photo
+id	String	Unique identifier for this result, 1-64 bytes
+photo_url	String	A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
+thumb_url	String	URL of the thumbnail for the photo
+photo_width	Integer	Optional. Width of the photo
+photo_height	Integer	Optional. Height of the photo
+title	String	Optional. Title for the result
+description	String	Optional. Short description of the result
+caption	String	Optional. Caption of the photo to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the photo
+InlineQueryResultGif
+Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
+
+Field	Type	Description
+type	String	Type of the result, must be gif
+id	String	Unique identifier for this result, 1-64 bytes
+gif_url	String	A valid URL for the GIF file. File size must not exceed 1MB
+gif_width	Integer	Optional. Width of the GIF
+gif_height	Integer	Optional. Height of the GIF
+thumb_url	String	URL of the static thumbnail for the result (jpeg or gif)
+title	String	Optional. Title for the result
+caption	String	Optional. Caption of the GIF file to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the GIF animation
+InlineQueryResultMpeg4Gif
+Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
+
+Field	Type	Description
+type	String	Type of the result, must be mpeg4_gif
+id	String	Unique identifier for this result, 1-64 bytes
+mpeg4_url	String	A valid URL for the MP4 file. File size must not exceed 1MB
+mpeg4_width	Integer	Optional. Video width
+mpeg4_height	Integer	Optional. Video height
+thumb_url	String	URL of the static thumbnail (jpeg or gif) for the result
+title	String	Optional. Title for the result
+caption	String	Optional. Caption of the MPEG-4 file to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the video animation
+InlineQueryResultVideo
+Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
+
+Field	Type	Description
+type	String	Type of the result, must be video
+id	String	Unique identifier for this result, 1-64 bytes
+video_url	String	A valid URL for the embedded video player or video file
+mime_type	String	Mime type of the content of video url, “text/html” or “video/mp4”
+thumb_url	String	URL of the thumbnail (jpeg only) for the video
+title	String	Title for the result
+caption	String	Optional. Caption of the video to be sent, 0-200 characters
+video_width	Integer	Optional. Video width
+video_height	Integer	Optional. Video height
+video_duration	Integer	Optional. Video duration in seconds
+description	String	Optional. Short description of the result
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the video
+InlineQueryResultAudio
+Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
+
+Field	Type	Description
+type	String	Type of the result, must be audio
+id	String	Unique identifier for this result, 1-64 bytes
+audio_url	String	A valid URL for the audio file
+title	String	Title
+caption	String	Optional. Caption, 0-200 characters
+performer	String	Optional. Performer
+audio_duration	Integer	Optional. Audio duration in seconds
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the audio
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultVoice
+Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.
+
+Field	Type	Description
+type	String	Type of the result, must be voice
+id	String	Unique identifier for this result, 1-64 bytes
+voice_url	String	A valid URL for the voice recording
+title	String	Recording title
+caption	String	Optional. Caption, 0-200 characters
+voice_duration	Integer	Optional. Recording duration in seconds
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the voice recording
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultDocument
+Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method.
+
+Field	Type	Description
+type	String	Type of the result, must be document
+id	String	Unique identifier for this result, 1-64 bytes
+title	String	Title for the result
+caption	String	Optional. Caption of the document to be sent, 0-200 characters
+document_url	String	A valid URL for the file
+mime_type	String	Mime type of the content of the file, either “application/pdf” or “application/zip”
+description	String	Optional. Short description of the result
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the file
+thumb_url	String	Optional. URL of the thumbnail (jpeg only) for the file
+thumb_width	Integer	Optional. Thumbnail width
+thumb_height	Integer	Optional. Thumbnail height
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultLocation
+Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
+
+Field	Type	Description
+type	String	Type of the result, must be location
+id	String	Unique identifier for this result, 1-64 Bytes
+latitude	Float number	Location latitude in degrees
+longitude	Float number	Location longitude in degrees
+title	String	Location title
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the location
+thumb_url	String	Optional. Url of the thumbnail for the result
+thumb_width	Integer	Optional. Thumbnail width
+thumb_height	Integer	Optional. Thumbnail height
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultVenue
+Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue.
+
+Field	Type	Description
+type	String	Type of the result, must be venue
+id	String	Unique identifier for this result, 1-64 Bytes
+latitude	Float	Latitude of the venue location in degrees
+longitude	Float	Longitude of the venue location in degrees
+title	String	Title of the venue
+address	String	Address of the venue
+foursquare_id	String	Optional. Foursquare identifier of the venue if known
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the venue
+thumb_url	String	Optional. Url of the thumbnail for the result
+thumb_width	Integer	Optional. Thumbnail width
+thumb_height	Integer	Optional. Thumbnail height
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultContact
+Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
+
+Field	Type	Description
+type	String	Type of the result, must be contact
+id	String	Unique identifier for this result, 1-64 Bytes
+phone_number	String	Contact's phone number
+first_name	String	Contact's first name
+last_name	String	Optional. Contact's last name
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the contact
+thumb_url	String	Optional. Url of the thumbnail for the result
+thumb_width	Integer	Optional. Thumbnail width
+thumb_height	Integer	Optional. Thumbnail height
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultGame
+Represents a Game.
+
+Field	Type	Description
+type	String	Type of the result, must be game
+id	String	Unique identifier for this result, 1-64 bytes
+game_short_name	String	Short name of the game
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+Note: This will only work in Telegram versions released after October 1, 2016. Older clients will not display any inline results if a game result is among them.
+
+InlineQueryResultCachedPhoto
+Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
+
+Field	Type	Description
+type	String	Type of the result, must be photo
+id	String	Unique identifier for this result, 1-64 bytes
+photo_file_id	String	A valid file identifier of the photo
+title	String	Optional. Title for the result
+description	String	Optional. Short description of the result
+caption	String	Optional. Caption of the photo to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the photo
+InlineQueryResultCachedGif
+Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with specified content instead of the animation.
+
+Field	Type	Description
+type	String	Type of the result, must be gif
+id	String	Unique identifier for this result, 1-64 bytes
+gif_file_id	String	A valid file identifier for the GIF file
+title	String	Optional. Title for the result
+caption	String	Optional. Caption of the GIF file to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the GIF animation
+InlineQueryResultCachedMpeg4Gif
+Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation.
+
+Field	Type	Description
+type	String	Type of the result, must be mpeg4_gif
+id	String	Unique identifier for this result, 1-64 bytes
+mpeg4_file_id	String	A valid file identifier for the MP4 file
+title	String	Optional. Title for the result
+caption	String	Optional. Caption of the MPEG-4 file to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the video animation
+InlineQueryResultCachedSticker
+Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
+
+Field	Type	Description
+type	String	Type of the result, must be sticker
+id	String	Unique identifier for this result, 1-64 bytes
+sticker_file_id	String	A valid file identifier of the sticker
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the sticker
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultCachedDocument
+Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only pdf-files and zip archives can be sent using this method.
+
+Field	Type	Description
+type	String	Type of the result, must be document
+id	String	Unique identifier for this result, 1-64 bytes
+title	String	Title for the result
+document_file_id	String	A valid file identifier for the file
+description	String	Optional. Short description of the result
+caption	String	Optional. Caption of the document to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the file
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultCachedVideo
+Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
+
+Field	Type	Description
+type	String	Type of the result, must be video
+id	String	Unique identifier for this result, 1-64 bytes
+video_file_id	String	A valid file identifier for the video file
+title	String	Title for the result
+description	String	Optional. Short description of the result
+caption	String	Optional. Caption of the video to be sent, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the video
+InlineQueryResultCachedVoice
+Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message.
+
+Field	Type	Description
+type	String	Type of the result, must be voice
+id	String	Unique identifier for this result, 1-64 bytes
+voice_file_id	String	A valid file identifier for the voice message
+title	String	Voice message title
+caption	String	Optional. Caption, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the voice message
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InlineQueryResultCachedAudio
+Represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
+
+Field	Type	Description
+type	String	Type of the result, must be audio
+id	String	Unique identifier for this result, 1-64 bytes
+audio_file_id	String	A valid file identifier for the audio file
+caption	String	Optional. Caption, 0-200 characters
+reply_markup	InlineKeyboardMarkup	Optional. Inline keyboard attached to the message
+input_message_content	InputMessageContent	Optional. Content of the message to be sent instead of the audio
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InputMessageContent
+This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 4 types:
+
+InputTextMessageContent
+InputLocationMessageContent
+InputVenueMessageContent
+InputContactMessageContent
+InputTextMessageContent
+Represents the content of a text message to be sent as the result of an inline query.
+
+Field	Type	Description
+message_text	String	Text of the message to be sent, 1-4096 characters
+parse_mode	String	Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+disable_web_page_preview	Boolean	Optional. Disables link previews for links in the sent message
+InputLocationMessageContent
+Represents the content of a location message to be sent as the result of an inline query.
+
+Field	Type	Description
+latitude	Float	Latitude of the location in degrees
+longitude	Float	Longitude of the location in degrees
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InputVenueMessageContent
+Represents the content of a venue message to be sent as the result of an inline query.
+
+Field	Type	Description
+latitude	Float	Latitude of the venue in degrees
+longitude	Float	Longitude of the venue in degrees
+title	String	Name of the venue
+address	String	Address of the venue
+foursquare_id	String	Optional. Foursquare identifier of the venue, if known
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+InputContactMessageContent
+Represents the content of a contact message to be sent as the result of an inline query.
+
+Field	Type	Description
+phone_number	String	Contact's phone number
+first_name	String	Contact's first name
+last_name	String	Optional. Contact's last name
+Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them.
+
+ChosenInlineResult
+Represents a result of an inline query that was chosen by the user and sent to their chat partner.
+
+Field	Type	Description
+result_id	String	The unique identifier for the result that was chosen
+from	User	The user that chose the result
+location	Location	Optional. Sender location, only for bots that require user location
+inline_message_id	String	Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. Will be also received in callback queries and can be used to edit the message.
+query	String	The query that was used to obtain the result
+GameHighScore
+This object represents one row of the high scores table for a game.
+
+Field	Type	Description
+position	Integer	Position in high score table for the game
+user	User	User
+score	Integer	Score
+WebhookInfo
+Contains information about the current status of a webhook.
+
+Field	Type	Description
+url	String	Webhook URL, may be empty if webhook is not set up
+has_custom_certificate	Boolean	True, if a custom certificate was provided for webhook certificate checks
+pending_update_count	Integer	Number of updates awaiting delivery
+last_error_date	Integer	Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
+last_error_message	String	Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
