@@ -59,7 +59,11 @@ class MethodParser {
                     } else
                         throw 'type name expected, got "$line"';
                 case Doc:
-                    if (paramsRe.match(line)) {
+                    if (nameRe.match(line)) {
+                        addCurType();
+                        state = Doc;
+                        curName = nameRe.matched(0);
+                    } else if (paramsRe.match(line)) {
                         state = Params;
                     } else {
                         curDoc.push(StringTools.trim(line));
@@ -110,7 +114,7 @@ class MethodParser {
                             meta: meta,
                         });
                     } else {
-                        continue;
+                        curDoc.push(line);
                     }
             }
         }

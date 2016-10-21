@@ -10,12 +10,23 @@ class Methods {
 	}
 	/**
 		Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
+		
+		Notes
+		1. This method will not work if an outgoing webhook is set up.
+		2. In order to avoid getting duplicate updates, recalculate offset after each server response.
 	**/
 	public inline function getUpdates(params:GetUpdatesParams, ?callback:Result<Array<Update>> -> Void) connection.execute("getUpdates", params, callback);
 	/**
 		Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
 		
 		If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
+		
+		Notes
+		1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.
+		2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.
+		3. Ports currently supported for Webhooks: 443, 80, 88, 8443.
+		
+		NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
 	**/
 	public inline function setWebhook(params:SetWebhookParams, ?callback:Result<Any> -> Void) connection.execute("setWebhook", params, callback);
 	/**
@@ -85,6 +96,8 @@ class Methods {
 	public inline function getUserProfilePhotos(params:GetUserProfilePhotosParams, ?callback:Result<UserProfilePhotos> -> Void) connection.execute("getUserProfilePhotos", params, callback);
 	/**
 		Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+		
+		Note: This function may not preserve the original file name. The MIME type of the file and its name (if available) should be saved when the File object is received.
 	**/
 	public inline function getFile(params:GetFileParams, ?callback:Result<File> -> Void) connection.execute("getFile", params, callback);
 	/**
@@ -121,6 +134,8 @@ class Methods {
 		Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
 		
 		Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via BotFather and accept the terms. Otherwise, you may use links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
+		
+		Otherwise, you may use links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
 	**/
 	public inline function answerCallbackQuery(params:AnswerCallbackQueryParams, ?callback:Result<True> -> Void) connection.execute("answerCallbackQuery", params, callback);
 	/**
@@ -138,6 +153,9 @@ class Methods {
 	/**
 		Use this method to send answers to an inline query. On success, True is returned.
 		No more than 50 results per query are allowed.
+		
+		
+		Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
 	**/
 	public inline function answerInlineQuery(params:AnswerInlineQueryParams, ?callback:Result<True> -> Void) connection.execute("answerInlineQuery", params, callback);
 	/**
