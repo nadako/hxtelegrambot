@@ -122,7 +122,7 @@ Main.main = function() {
 		}
 	};
 	var cb = function() {
-		var _this = new PollUpdateListener(api,onUpdate,1000);
+		var _this = new PollUpdateListener(api,onUpdate,10);
 		_this.stopped = false;
 		_this.loop();
 	};
@@ -138,10 +138,10 @@ Main.main = function() {
 	});
 };
 Math.__name__ = true;
-var PollUpdateListener = function(api,handler,interval) {
+var PollUpdateListener = function(api,handler,timeout) {
 	this.api = api;
 	this.handler = handler;
-	this.interval = interval;
+	this.timeout = timeout;
 	this.stopped = false;
 	this.lastUpdate = -1;
 };
@@ -149,7 +149,7 @@ PollUpdateListener.__name__ = true;
 PollUpdateListener.prototype = {
 	loop: function() {
 		var _gthis = this;
-		this.api.connection.execute("getUpdates",{ offset : this.lastUpdate + 1},function(result) {
+		this.api.connection.execute("getUpdates",{ offset : this.lastUpdate + 1, timeout : this.timeout},function(result) {
 			if(_gthis.stopped) {
 				return;
 			}
@@ -168,7 +168,7 @@ PollUpdateListener.prototype = {
 				}
 				break;
 			}
-			haxe_Timer.delay($bind(_gthis,_gthis.loop),_gthis.interval);
+			_gthis.loop();
 		});
 	}
 };
@@ -297,32 +297,6 @@ haxe_Http.prototype = {
 	,onError: function(msg) {
 	}
 	,onStatus: function(status) {
-	}
-};
-var haxe_Timer = function(time_ms) {
-	var me = this;
-	this.id = setInterval(function() {
-		me.run();
-	},time_ms);
-};
-haxe_Timer.__name__ = true;
-haxe_Timer.delay = function(f,time_ms) {
-	var t = new haxe_Timer(time_ms);
-	t.run = function() {
-		t.stop();
-		f();
-	};
-	return t;
-};
-haxe_Timer.prototype = {
-	stop: function() {
-		if(this.id == null) {
-			return;
-		}
-		clearInterval(this.id);
-		this.id = null;
-	}
-	,run: function() {
 	}
 };
 var haxe_ds_Either = { __ename__ : true, __constructs__ : ["Left","Right"] };

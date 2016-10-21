@@ -19,7 +19,7 @@ class Main {
 
         var listener = new WebhookUpdateListener(api, onUpdate, "");
         listener.stop(function() {
-            new PollUpdateListener(api, onUpdate, 1000).start();
+            new PollUpdateListener(api, onUpdate, 10).start();
         });
 
 

@@ -4,14 +4,15 @@ import telegram.types.Update;
 class PollUpdateListener {
     var api:Methods;
     var interval:Int;
+    var timeout:Int;
     var stopped:Bool;
     var lastUpdate:Int;
     var handler:Update->Void;
 
-    public function new(api:Methods, handler:Update->Void, interval:Int) {
+    public function new(api:Methods, handler:Update->Void, timeout:Int) {
         this.api = api;
         this.handler = handler;
-        this.interval = interval;
+        this.timeout = timeout;
         this.stopped = false;
         this.lastUpdate = -1;
     }
@@ -26,7 +27,7 @@ class PollUpdateListener {
     }
 
     function loop() {
-        api.getUpdates({offset: lastUpdate + 1}, function(result) {
+        api.getUpdates({offset: lastUpdate + 1, timeout: timeout}, function(result) {
             if (stopped)
                 return;
             switch (result) {
@@ -38,7 +39,7 @@ class PollUpdateListener {
                         handler(update);
                     }
             }
-            haxe.Timer.delay(loop, interval);
+            loop();
         });
     }
 }
