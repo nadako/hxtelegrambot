@@ -21,7 +21,10 @@ class Main {
             trace(req);
             res.end("hi");
         });
-        server.listen(80);
+
+        var port = Sys.getEnv("PORT");
+        var port = if (port == null) 80 else Std.parseInt(port);
+        server.listen(port);
 
         // var listener = new WebhookUpdateListener(api, onUpdate, "https://95.55.124.126:8443/");
         // listener.start(function() {
