@@ -8,38 +8,6 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
-var Connection = function(token) {
-	this.token = token;
-};
-Connection.__name__ = true;
-Connection.prototype = {
-	execute: function(name,params,callback) {
-		var req = new haxe_Http("https://api.telegram.org/bot" + this.token + "/" + name);
-		if(callback != null) {
-			req.onData = function(s) {
-				var res;
-				try {
-					res = JSON.parse(s);
-				} catch( e ) {
-					if (e instanceof js__$Boot_HaxeError) e = e.val;
-					callback(haxe_ds_Either.Left({ message : Std.string(e)}));
-					return;
-				}
-				if(res.ok) {
-					callback(haxe_ds_Either.Right(res.result));
-				} else {
-					callback(haxe_ds_Either.Left({ message : res.description}));
-				}
-			};
-			req.onError = function(e1) {
-				callback(haxe_ds_Either.Left({ message : e1}));
-			};
-		}
-		req.setPostData(JSON.stringify(params));
-		req.setHeader("Content-Type","application/json");
-		req.request(true);
-	}
-};
 var HxOverrides = function() { };
 HxOverrides.__name__ = true;
 HxOverrides.cca = function(s,index) {
@@ -115,63 +83,24 @@ Main.main = function() {
 	if(token == null) {
 		token = js_node_Fs.readFileSync("bottoken.txt",{ encoding : "utf8"});
 	}
-	var api = new telegram_BotApi(new Connection(token));
+	var api = new telegram_bot_BotApi(new telegram_bot_Connection(token));
 	var onUpdate = function(update) {
 		if(update.message != null) {
 			api.connection.execute("sendMessage",{ text : "Я тут", reply_to_message_id : update.message.message_id, chat_id : update.message.chat.id},null);
 		}
 	};
+	var _this = new telegram_bot_PollUpdateListener(api,onUpdate,10);
 	var cb = function() {
-		var _this = new PollUpdateListener(api,onUpdate,10);
-		_this.stopped = false;
-		_this.loop();
+		console.log("Bot started");
 	};
-	new WebhookUpdateListener(api,onUpdate,"").api.connection.execute("setWebhook",{ url : ""},function(result) {
-		switch(result[1]) {
-		case 0:
-			throw new js__$Boot_HaxeError(JSON.stringify(result[2]));
-			break;
-		case 1:
-			cb();
-			break;
-		}
+	var _gthis = _this;
+	_this.stopped = false;
+	_this.api.connection.execute("setWebhook",{ url : ""},function(_) {
+		_gthis.loop();
+		cb();
 	});
 };
 Math.__name__ = true;
-var PollUpdateListener = function(api,handler,timeout) {
-	this.api = api;
-	this.handler = handler;
-	this.timeout = timeout;
-	this.stopped = false;
-	this.lastUpdate = -1;
-};
-PollUpdateListener.__name__ = true;
-PollUpdateListener.prototype = {
-	loop: function() {
-		var _gthis = this;
-		this.api.connection.execute("getUpdates",{ offset : this.lastUpdate + 1, timeout : this.timeout},function(result) {
-			if(_gthis.stopped) {
-				return;
-			}
-			switch(result[1]) {
-			case 0:
-				throw new js__$Boot_HaxeError(JSON.stringify(result[2]));
-				break;
-			case 1:
-				var updates = result[2];
-				var _g = 0;
-				while(_g < updates.length) {
-					var update = updates[_g];
-					++_g;
-					_gthis.lastUpdate = update.update_id;
-					_gthis.handler(update);
-				}
-				break;
-			}
-			_gthis.loop();
-		});
-	}
-};
 var Reflect = function() { };
 Reflect.__name__ = true;
 Reflect.field = function(o,field) {
@@ -196,13 +125,6 @@ Std.parseInt = function(x) {
 	}
 	return v;
 };
-var WebhookUpdateListener = function(api,handler,url) {
-	this.api = api;
-	this.handler = handler;
-	this.lastUpdate = -1;
-	this.url = url;
-};
-WebhookUpdateListener.__name__ = true;
 var haxe_Http = function(url) {
 	this.url = url;
 	this.headers = new List();
@@ -414,10 +336,76 @@ var js_node_Http = require("http");
 var js_node_Https = require("https");
 var js_node_Url = require("url");
 var js_node_buffer_Buffer = require("buffer").Buffer;
-var telegram_BotApi = function(connection) {
+var telegram_bot_BotApi = function(connection) {
 	this.connection = connection;
 };
-telegram_BotApi.__name__ = true;
+telegram_bot_BotApi.__name__ = true;
+var telegram_bot_Connection = function(token) {
+	this.token = token;
+};
+telegram_bot_Connection.__name__ = true;
+telegram_bot_Connection.prototype = {
+	execute: function(name,params,callback) {
+		var req = new haxe_Http("https://api.telegram.org/bot" + this.token + "/" + name);
+		if(callback != null) {
+			req.onData = function(s) {
+				var res;
+				try {
+					res = JSON.parse(s);
+				} catch( e ) {
+					if (e instanceof js__$Boot_HaxeError) e = e.val;
+					callback(haxe_ds_Either.Left({ message : Std.string(e)}));
+					return;
+				}
+				if(res.ok) {
+					callback(haxe_ds_Either.Right(res.result));
+				} else {
+					callback(haxe_ds_Either.Left({ message : res.description}));
+				}
+			};
+			req.onError = function(e1) {
+				callback(haxe_ds_Either.Left({ message : e1}));
+			};
+		}
+		req.setPostData(JSON.stringify(params));
+		req.setHeader("Content-Type","application/json");
+		req.request(true);
+	}
+};
+var telegram_bot_PollUpdateListener = function(api,handler,timeout) {
+	this.api = api;
+	this.handler = handler;
+	this.timeout = timeout;
+	this.stopped = false;
+	this.lastUpdate = -1;
+};
+telegram_bot_PollUpdateListener.__name__ = true;
+telegram_bot_PollUpdateListener.prototype = {
+	loop: function() {
+		var _gthis = this;
+		this.api.connection.execute("getUpdates",{ offset : this.lastUpdate + 1, timeout : this.timeout},function(result) {
+			if(_gthis.stopped) {
+				return;
+			}
+			switch(result[1]) {
+			case 0:
+				throw new js__$Boot_HaxeError(JSON.stringify(result[2]));
+				break;
+			case 1:
+				var updates = result[2];
+				var _g = 0;
+				while(_g < updates.length) {
+					var update = updates[_g];
+					++_g;
+					_gthis.lastUpdate = update.update_id;
+					_gthis.handler(update);
+				}
+				break;
+			}
+			_gthis.loop();
+		});
+	}
+};
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 String.__name__ = true;

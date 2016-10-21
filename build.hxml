@@ -1,4 +1,5 @@
 -cp src
+-cp sample
 -main Main
 -js main.js
 -dce full
