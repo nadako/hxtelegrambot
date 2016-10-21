@@ -115,7 +115,7 @@ Main.main = function() {
 	if(token == null) {
 		token = js_node_Fs.readFileSync("bottoken.txt",{ encoding : "utf8"});
 	}
-	var api = new telegram_Methods(new Connection(token));
+	var api = new telegram_BotApi(new Connection(token));
 	var onUpdate = function(update) {
 		if(update.message != null) {
 			api.connection.execute("sendMessage",{ text : "Я тут", reply_to_message_id : update.message.message_id, chat_id : update.message.chat.id},null);
@@ -414,10 +414,10 @@ var js_node_Http = require("http");
 var js_node_Https = require("https");
 var js_node_Url = require("url");
 var js_node_buffer_Buffer = require("buffer").Buffer;
-var telegram_Methods = function(connection) {
+var telegram_BotApi = function(connection) {
 	this.connection = connection;
 };
-telegram_Methods.__name__ = true;
+telegram_BotApi.__name__ = true;
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 String.__name__ = true;

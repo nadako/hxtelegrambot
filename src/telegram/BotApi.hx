@@ -3,9 +3,9 @@ package telegram;
 import haxe.extern.EitherType;
 import telegram.types.*;
 
-class Methods {
+class BotApi {
 	var connection : Connection;
-	public function new(connection) {
+	public function new(connection:Connection) {
 		this.connection = connection;
 	}
 	/**

@@ -1,13 +1,13 @@
-import telegram.Methods;
+import telegram.BotApi;
 import telegram.types.Update;
 
 class WebhookUpdateListener {
-    var api:Methods;
+    var api:BotApi;
     var lastUpdate:Int;
     var handler:Update->Void;
     var url:String;
 
-    public function new(api:Methods, handler:Update->Void, url:String) {
+    public function new(api:BotApi, handler:Update->Void, url:String) {
         this.api = api;
         this.handler = handler;
         this.lastUpdate = -1;

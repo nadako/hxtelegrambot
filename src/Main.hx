@@ -1,11 +1,12 @@
 import telegram.types.Update;
+import telegram.BotApi;
 
 class Main {
     static function main() {
         var token = Sys.getEnv("BOT_TOKEN");
         if (token == null)
             token = sys.io.File.getContent("bottoken.txt");
-        var api = new telegram.Methods(new Connection(token));
+        var api = new BotApi(new Connection(token));
 
         function onUpdate(update:Update) {
             if (update.message != null) {

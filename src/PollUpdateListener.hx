@@ -1,15 +1,15 @@
-import telegram.Methods;
+import telegram.BotApi;
 import telegram.types.Update;
 
 class PollUpdateListener {
-    var api:Methods;
+    var api:BotApi;
     var interval:Int;
     var timeout:Int;
     var stopped:Bool;
     var lastUpdate:Int;
     var handler:Update->Void;
 
-    public function new(api:Methods, handler:Update->Void, timeout:Int) {
+    public function new(api:BotApi, handler:Update->Void, timeout:Int) {
         this.api = api;
         this.handler = handler;
         this.timeout = timeout;

@@ -164,7 +164,7 @@ class MethodParser {
             doc: "",
             access: [APublic],
             kind: FFun({
-                args: [{name: "connection", type: null}],
+                args: [{name: "connection", type: macro : Connection}],
                 ret: null,
                 expr: macro { this.connection = connection; }
             })
@@ -180,7 +180,7 @@ class MethodParser {
         content.unshift(printer.printTypeDefinition({
             pos: pos,
             pack: ["telegram"],
-            name: "Methods",
+            name: "BotApi",
             kind: TDClass(),
             fields: fields,
         }, false));
@@ -189,7 +189,7 @@ class MethodParser {
         content.unshift("import haxe.extern.EitherType;");
         content.unshift("package telegram;\n");
 
-        sys.io.File.saveContent("src/telegram/Methods.hx", content.join("\n"));
+        sys.io.File.saveContent("src/telegram/BotApi.hx", content.join("\n"));
 
         // for (type in types) {
         //     var content = [];
