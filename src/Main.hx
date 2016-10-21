@@ -15,7 +15,15 @@ class Main {
             }
         }
 
-        var listener = new PollUpdateListener(api, onUpdate, 1000);
-        listener.start();
+        var server = js.node.Http.createServer(function(req, res) {
+            trace(req);
+            res.end("hi");
+        });
+        server.listen(8443);
+
+        // var listener = new WebhookUpdateListener(api, onUpdate, "https://95.55.124.126:8443/");
+        // listener.start(function() {
+
+        // });
     }
 }

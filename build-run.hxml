@@ -17,6 +17,5 @@
 # generate sample bot
 build.hxml
 
---next
-
--cmd node main.js
+# --next
+# -cmd node main.js

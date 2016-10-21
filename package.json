@@ -1,0 +1,11 @@
+{
+  "name": "myapp",
+  "description": "a really cool app",
+  "version": "1.0.0",
+  "engines": {
+    "node": "4.1.1"
+  },
+  "scripts": {
+    "start": "node main.js"
+  }
+}
