@@ -1,4 +1,4 @@
-package telegram.types;
+package telegram;
 
 @:enum
 abstract True(Bool) to Bool {

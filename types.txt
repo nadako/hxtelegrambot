@@ -1,3 +1,23 @@
+Update
+This object represents an incoming update.
+Only one of the optional parameters can be present in any given update.
+
+Field	Type	Description
+update_id	Integer	The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
+message	Message	Optional. New incoming message of any kind — text, photo, sticker, etc.
+edited_message	Message	Optional. New version of a message that is known to the bot and was edited
+inline_query	InlineQuery	Optional. New incoming inline query
+chosen_inline_result	ChosenInlineResult	Optional. The result of an inline query that was chosen by a user and sent to their chat partner.
+callback_query	CallbackQuery	Optional. New incoming callback query
+WebhookInfo
+Contains information about the current status of a webhook.
+
+Field	Type	Description
+url	String	Webhook URL, may be empty if webhook is not set up
+has_custom_certificate	Boolean	True, if a custom certificate was provided for webhook certificate checks
+pending_update_count	Integer	Number of updates awaiting delivery
+last_error_date	Integer	Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
+last_error_message	String	Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
 User
 This object represents a Telegram user or bot.
 
@@ -255,39 +275,6 @@ It is not possible to change the file type when resending by file_id. I.e. a vid
 It is not possible to resend thumbnails.
 Resending a photo by file_id will send all of its sizes.
 file_id can't be transferred from one bot to another.
-Game
-This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
-
-Field	Type	Description
-title	String	Title of the game
-description	String	Description of the game
-photo	Array of PhotoSize	Photo that will be displayed in the game message in chats.
-text	String	Optional. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls setGameScore, or manually edited using editMessageText. 0-4096 characters.
-text_entities	Array of MessageEntity	Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
-animation	Animation	Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
-Animation
-You can provide an animation for your game so that it looks stylish in chats (check out Lumberjack for an example). This object represents an animation file to be displayed in the message containing a game.
-
-Field	Type	Description
-file_id	String	Unique file identifier
-thumb	PhotoSize	Optional. Animation thumbnail as defined by sender
-file_name	String	Optional. Original animation filename as defined by sender
-mime_type	String	Optional. MIME type of the file as defined by sender
-file_size	Integer	Optional. File size
-CallbackGame
-A placeholder, currently holds no information. Use BotFather to set up your game.
-Field	Type	Description
-Update
-This object represents an incoming update.
-Only one of the optional parameters can be present in any given update.
-
-Field	Type	Description
-update_id	Integer	The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
-message	Message	Optional. New incoming message of any kind — text, photo, sticker, etc.
-edited_message	Message	Optional. New version of a message that is known to the bot and was edited
-inline_query	InlineQuery	Optional. New incoming inline query
-chosen_inline_result	ChosenInlineResult	Optional. The result of an inline query that was chosen by a user and sent to their chat partner.
-callback_query	CallbackQuery	Optional. New incoming callback query
 InlineQuery
 This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 
@@ -299,27 +286,6 @@ query	String	Text of the query (up to 512 characters)
 offset	String	Offset of the results to be returned, can be controlled by the bot
 InlineQueryResult
 This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
-
-InlineQueryResultCachedAudio
-InlineQueryResultCachedDocument
-InlineQueryResultCachedGif
-InlineQueryResultCachedMpeg4Gif
-InlineQueryResultCachedPhoto
-InlineQueryResultCachedSticker
-InlineQueryResultCachedVideo
-InlineQueryResultCachedVoice
-InlineQueryResultArticle
-InlineQueryResultAudio
-InlineQueryResultContact
-InlineQueryResultGame
-InlineQueryResultDocument
-InlineQueryResultGif
-InlineQueryResultLocation
-InlineQueryResultMpeg4Gif
-InlineQueryResultPhoto
-InlineQueryResultVenue
-InlineQueryResultVideo
-InlineQueryResultVoice
 InlineQueryResultArticle
 Represents a link to an article or web page.
 
@@ -649,6 +615,27 @@ from	User	The user that chose the result
 location	Location	Optional. Sender location, only for bots that require user location
 inline_message_id	String	Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. Will be also received in callback queries and can be used to edit the message.
 query	String	The query that was used to obtain the result
+Game
+This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
+
+Field	Type	Description
+title	String	Title of the game
+description	String	Description of the game
+photo	Array of PhotoSize	Photo that will be displayed in the game message in chats.
+text	String	Optional. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls setGameScore, or manually edited using editMessageText. 0-4096 characters.
+text_entities	Array of MessageEntity	Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
+animation	Animation	Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
+Animation
+You can provide an animation for your game so that it looks stylish in chats (check out Lumberjack for an example). This object represents an animation file to be displayed in the message containing a game.
+
+Field	Type	Description
+file_id	String	Unique file identifier
+thumb	PhotoSize	Optional. Animation thumbnail as defined by sender
+file_name	String	Optional. Original animation filename as defined by sender
+mime_type	String	Optional. MIME type of the file as defined by sender
+file_size	Integer	Optional. File size
+CallbackGame
+A placeholder, currently holds no information. Use BotFather to set up your game.
 GameHighScore
 This object represents one row of the high scores table for a game.
 
@@ -656,12 +643,3 @@ Field	Type	Description
 position	Integer	Position in high score table for the game
 user	User	User
 score	Integer	Score
-WebhookInfo
-Contains information about the current status of a webhook.
-
-Field	Type	Description
-url	String	Webhook URL, may be empty if webhook is not set up
-has_custom_certificate	Boolean	True, if a custom certificate was provided for webhook certificate checks
-pending_update_count	Integer	Number of updates awaiting delivery
-last_error_date	Integer	Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
-last_error_message	String	Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook

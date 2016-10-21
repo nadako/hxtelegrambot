@@ -47,7 +47,11 @@ class TypeParser {
                     } else
                         throw 'type name expected, got "$line"';
                 case Doc:
-                    if (fieldsRe.match(line)) {
+                    if (nameRe.match(line)) {
+                        addCurType();
+                        state = Doc;
+                        curName = nameRe.matched(0);
+                    } else if (fieldsRe.match(line)) {
                         state = Fields;
                     } else {
                         curDoc.push(StringTools.trim(line));
