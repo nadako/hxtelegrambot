@@ -12,7 +12,7 @@ class MethodParser {
     public static function process() {
         var pos = Context.makePosition({min: 0, max: 0, file: ""});
         var state = Start;
-        var lines = ~/\r?\n/g.split(sys.io.File.getContent("methods.txt"));
+        var lines = ~/\r?\n/g.split(sys.io.File.getContent("generator/methods.txt"));
         var returnTypes = new Map();
         function parseCT(s) {
             return switch (Context.parseInlineString('(_:$s)', pos).expr) {
@@ -20,7 +20,7 @@ class MethodParser {
                 default: throw false;
             }
         }
-        for (line in ~/\r?\n/g.split(sys.io.File.getContent("returnTypes.txt"))) {
+        for (line in ~/\r?\n/g.split(sys.io.File.getContent("generator/returnTypes.txt"))) {
             line = StringTools.trim(line);
             if (line.length > 0) {
                 var parts = line.split("::");

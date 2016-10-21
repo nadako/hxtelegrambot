@@ -11,7 +11,7 @@ enum State {
 class TypeParser {
     public static function process() {
         var state = Start;
-        var lines = ~/\r?\n/g.split(sys.io.File.getContent("types.txt"));
+        var lines = ~/\r?\n/g.split(sys.io.File.getContent("generator/types.txt"));
         var nameRe = ~/^[A-Z]\w*$/;
         var fieldsRe = ~/^Field\tType\tDescription$/;
         var fieldRe = ~/^(\w+)\t(.*)\t((Optional\. )?(.*))$/;
