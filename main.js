@@ -7,7 +7,7 @@ Main.main = function() {
 	js_node_Http.createServer(function(req,res) {
 		console.log(req);
 		res.end("hi");
-	}).listen(8443);
+	}).listen(80);
 };
 var haxe_io_Bytes = function() { };
 var js_node_Fs = require("fs");
