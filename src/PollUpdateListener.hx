@@ -31,7 +31,7 @@ class PollUpdateListener {
                 return;
             switch (result) {
                 case Left(error):
-                    throw error;
+                    throw haxe.Json.stringify(error);
                 case Right(updates):
                     for (update in updates) {
                         lastUpdate = update.update_id;

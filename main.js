@@ -121,9 +121,21 @@ Main.main = function() {
 			api.connection.execute("sendMessage",{ text : "Я тут", reply_to_message_id : update.message.message_id, chat_id : update.message.chat.id},null);
 		}
 	};
-	var _this = new PollUpdateListener(api,onUpdate,1000);
-	_this.stopped = false;
-	_this.loop();
+	var cb = function() {
+		var _this = new PollUpdateListener(api,onUpdate,1000);
+		_this.stopped = false;
+		_this.loop();
+	};
+	new WebhookUpdateListener(api,onUpdate,"").api.connection.execute("setWebhook",{ url : ""},function(result) {
+		switch(result[1]) {
+		case 0:
+			throw new js__$Boot_HaxeError(JSON.stringify(result[2]));
+			break;
+		case 1:
+			cb();
+			break;
+		}
+	});
 };
 Math.__name__ = true;
 var PollUpdateListener = function(api,handler,interval) {
@@ -143,7 +155,7 @@ PollUpdateListener.prototype = {
 			}
 			switch(result[1]) {
 			case 0:
-				throw new js__$Boot_HaxeError(result[2]);
+				throw new js__$Boot_HaxeError(JSON.stringify(result[2]));
 				break;
 			case 1:
 				var updates = result[2];
@@ -184,6 +196,13 @@ Std.parseInt = function(x) {
 	}
 	return v;
 };
+var WebhookUpdateListener = function(api,handler,url) {
+	this.api = api;
+	this.handler = handler;
+	this.lastUpdate = -1;
+	this.url = url;
+};
+WebhookUpdateListener.__name__ = true;
 var haxe_Http = function(url) {
 	this.url = url;
 	this.headers = new List();

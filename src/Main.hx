@@ -16,7 +16,12 @@ class Main {
                 });
             }
         }
-        new PollUpdateListener(api, onUpdate, 1000).start();
+
+        var listener = new WebhookUpdateListener(api, onUpdate, "");
+        listener.stop(function() {
+            new PollUpdateListener(api, onUpdate, 1000).start();
+        });
+
 
         // var server = js.node.Http.createServer(function(req, res) {
         //     req.on("data", function(data) {
@@ -29,7 +34,6 @@ class Main {
         // var port = if (port == null) 80 else Std.parseInt(port);
         // server.listen(port);
 
-        // var listener = new WebhookUpdateListener(api, onUpdate, "https://95.55.124.126:8443/");
         // listener.start(function() {
 
         // });

@@ -17,14 +17,14 @@ class WebhookUpdateListener {
     public inline function start(cb:Void->Void) {
         api.setWebhook({url: url}, function(result) switch result {
             case Left(error): throw haxe.Json.stringify(error);
-            case Right(msg): trace(msg);
+            case Right(msg): cb();
         });
     }
 
     public inline function stop(cb:Void->Void) {
         api.setWebhook({url: ""}, function(result) switch result {
             case Left(error): throw haxe.Json.stringify(error);
-            case Right(msg): trace(msg);
+            case Right(msg): cb();
         });
     }
 }
