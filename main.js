@@ -3,7 +3,10 @@ if (process.version < "v4.0.0") console.warn("Module " + (typeof(module) == "und
 (function () { "use strict";
 var Main = function() { };
 Main.main = function() {
-	js_node_Fs.readFileSync("bottoken.txt",{ encoding : "utf8"});
+	var token = process.env["BOT_TOKEN"];
+	if(token == null) {
+		token = js_node_Fs.readFileSync("bottoken.txt",{ encoding : "utf8"});
+	}
 	js_node_Http.createServer(function(req,res) {
 		console.log(req);
 		res.end("hi");
