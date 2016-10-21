@@ -15,7 +15,9 @@ class BotApi {
 		1. This method will not work if an outgoing webhook is set up.
 		2. In order to avoid getting duplicate updates, recalculate offset after each server response.
 	**/
-	public inline function getUpdates(params:GetUpdatesParams, ?callback:Result<Array<Update>> -> Void) connection.execute("getUpdates", params, callback);
+	public inline function getUpdates(params:GetUpdatesParams, ?callback:Result<Array<Update>> -> Void) {
+		connection.execute("getUpdates", params, callback);
+	}
 	/**
 		Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
 		
@@ -28,108 +30,156 @@ class BotApi {
 		
 		NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
 	**/
-	public inline function setWebhook(params:SetWebhookParams, ?callback:Result<Any> -> Void) connection.execute("setWebhook", params, callback);
+	public inline function setWebhook(params:SetWebhookParams, ?callback:Result<Any> -> Void) {
+		connection.execute("setWebhook", params, callback);
+	}
 	/**
 		Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
 	**/
-	public inline function getWebhookInfo(?callback:Result<WebhookInfo> -> Void) connection.execute("getWebhookInfo", { }, callback);
+	public inline function getWebhookInfo(?callback:Result<WebhookInfo> -> Void) {
+		connection.execute("getWebhookInfo", { }, callback);
+	}
 	/**
 		A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
 	**/
-	public inline function getMe(?callback:Result<User> -> Void) connection.execute("getMe", { }, callback);
+	public inline function getMe(?callback:Result<User> -> Void) {
+		connection.execute("getMe", { }, callback);
+	}
 	/**
 		Use this method to send text messages. On success, the sent Message is returned.
 	**/
-	public inline function sendMessage(params:SendMessageParams, ?callback:Result<Message> -> Void) connection.execute("sendMessage", params, callback);
+	public inline function sendMessage(params:SendMessageParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendMessage", params, callback);
+	}
 	/**
 		Use this method to forward messages of any kind. On success, the sent Message is returned.
 	**/
-	public inline function forwardMessage(params:ForwardMessageParams, ?callback:Result<Message> -> Void) connection.execute("forwardMessage", params, callback);
+	public inline function forwardMessage(params:ForwardMessageParams, ?callback:Result<Message> -> Void) {
+		connection.execute("forwardMessage", params, callback);
+	}
 	/**
 		Use this method to send photos. On success, the sent Message is returned.
 	**/
-	public inline function sendPhoto(params:SendPhotoParams, ?callback:Result<Message> -> Void) connection.execute("sendPhoto", params, callback);
+	public inline function sendPhoto(params:SendPhotoParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendPhoto", params, callback);
+	}
 	/**
 		Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 		
 		For sending voice messages, use the sendVoice method instead.
 	**/
-	public inline function sendAudio(params:SendAudioParams, ?callback:Result<Message> -> Void) connection.execute("sendAudio", params, callback);
+	public inline function sendAudio(params:SendAudioParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendAudio", params, callback);
+	}
 	/**
 		Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	public inline function sendDocument(params:SendDocumentParams, ?callback:Result<Message> -> Void) connection.execute("sendDocument", params, callback);
+	public inline function sendDocument(params:SendDocumentParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendDocument", params, callback);
+	}
 	/**
 		Use this method to send .webp stickers. On success, the sent Message is returned.
 	**/
-	public inline function sendSticker(params:SendStickerParams, ?callback:Result<Message> -> Void) connection.execute("sendSticker", params, callback);
+	public inline function sendSticker(params:SendStickerParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendSticker", params, callback);
+	}
 	/**
 		Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	public inline function sendVideo(params:SendVideoParams, ?callback:Result<Message> -> Void) connection.execute("sendVideo", params, callback);
+	public inline function sendVideo(params:SendVideoParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendVideo", params, callback);
+	}
 	/**
 		Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	public inline function sendVoice(params:SendVoiceParams, ?callback:Result<Message> -> Void) connection.execute("sendVoice", params, callback);
+	public inline function sendVoice(params:SendVoiceParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendVoice", params, callback);
+	}
 	/**
 		Use this method to send point on the map. On success, the sent Message is returned.
 	**/
-	public inline function sendLocation(params:SendLocationParams, ?callback:Result<Message> -> Void) connection.execute("sendLocation", params, callback);
+	public inline function sendLocation(params:SendLocationParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendLocation", params, callback);
+	}
 	/**
 		Use this method to send information about a venue. On success, the sent Message is returned.
 	**/
-	public inline function sendVenue(params:SendVenueParams, ?callback:Result<Message> -> Void) connection.execute("sendVenue", params, callback);
+	public inline function sendVenue(params:SendVenueParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendVenue", params, callback);
+	}
 	/**
 		Use this method to send phone contacts. On success, the sent Message is returned.
 	**/
-	public inline function sendContact(params:SendContactParams, ?callback:Result<Message> -> Void) connection.execute("sendContact", params, callback);
+	public inline function sendContact(params:SendContactParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendContact", params, callback);
+	}
 	/**
 		Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
 		
 		Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
 		We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
 	**/
-	public inline function sendChatAction(params:SendChatActionParams, ?callback:Result<Any> -> Void) connection.execute("sendChatAction", params, callback);
+	public inline function sendChatAction(params:SendChatActionParams, ?callback:Result<Any> -> Void) {
+		connection.execute("sendChatAction", params, callback);
+	}
 	/**
 		Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
 	**/
-	public inline function getUserProfilePhotos(params:GetUserProfilePhotosParams, ?callback:Result<UserProfilePhotos> -> Void) connection.execute("getUserProfilePhotos", params, callback);
+	public inline function getUserProfilePhotos(params:GetUserProfilePhotosParams, ?callback:Result<UserProfilePhotos> -> Void) {
+		connection.execute("getUserProfilePhotos", params, callback);
+	}
 	/**
 		Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
 		
 		Note: This function may not preserve the original file name. The MIME type of the file and its name (if available) should be saved when the File object is received.
 	**/
-	public inline function getFile(params:GetFileParams, ?callback:Result<File> -> Void) connection.execute("getFile", params, callback);
+	public inline function getFile(params:GetFileParams, ?callback:Result<File> -> Void) {
+		connection.execute("getFile", params, callback);
+	}
 	/**
 		Use this method to kick a user from a group or a supergroup. In the case of supergroups, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the group for this to work. Returns True on success.
 		
 		Note: This will method only work if the ‘All Members Are Admins’ setting is off in the target group. Otherwise members may only be removed by the group's creator or by the member that added them.
 	**/
-	public inline function kickChatMember(params:KickChatMemberParams, ?callback:Result<True> -> Void) connection.execute("kickChatMember", params, callback);
+	public inline function kickChatMember(params:KickChatMemberParams, ?callback:Result<True> -> Void) {
+		connection.execute("kickChatMember", params, callback);
+	}
 	/**
 		Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
 	**/
-	public inline function leaveChat(params:LeaveChatParams, ?callback:Result<True> -> Void) connection.execute("leaveChat", params, callback);
+	public inline function leaveChat(params:LeaveChatParams, ?callback:Result<True> -> Void) {
+		connection.execute("leaveChat", params, callback);
+	}
 	/**
 		Use this method to unban a previously kicked user in a supergroup. The user will not return to the group automatically, but will be able to join via link, etc. The bot must be an administrator in the group for this to work. Returns True on success.
 	**/
-	public inline function unbanChatMember(params:UnbanChatMemberParams, ?callback:Result<True> -> Void) connection.execute("unbanChatMember", params, callback);
+	public inline function unbanChatMember(params:UnbanChatMemberParams, ?callback:Result<True> -> Void) {
+		connection.execute("unbanChatMember", params, callback);
+	}
 	/**
 		Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
 	**/
-	public inline function getChat(params:GetChatParams, ?callback:Result<Chat> -> Void) connection.execute("getChat", params, callback);
+	public inline function getChat(params:GetChatParams, ?callback:Result<Chat> -> Void) {
+		connection.execute("getChat", params, callback);
+	}
 	/**
 		Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
 	**/
-	public inline function getChatAdministrators(params:GetChatAdministratorsParams, ?callback:Result<Array<ChatMember>> -> Void) connection.execute("getChatAdministrators", params, callback);
+	public inline function getChatAdministrators(params:GetChatAdministratorsParams, ?callback:Result<Array<ChatMember>> -> Void) {
+		connection.execute("getChatAdministrators", params, callback);
+	}
 	/**
 		Use this method to get the number of members in a chat. Returns Int on success.
 	**/
-	public inline function getChatMembersCount(params:GetChatMembersCountParams, ?callback:Result<Int> -> Void) connection.execute("getChatMembersCount", params, callback);
+	public inline function getChatMembersCount(params:GetChatMembersCountParams, ?callback:Result<Int> -> Void) {
+		connection.execute("getChatMembersCount", params, callback);
+	}
 	/**
 		Use this method to get information about a member of a chat. Returns a ChatMember object on success.
 	**/
-	public inline function getChatMember(params:GetChatMemberParams, ?callback:Result<ChatMember> -> Void) connection.execute("getChatMember", params, callback);
+	public inline function getChatMember(params:GetChatMemberParams, ?callback:Result<ChatMember> -> Void) {
+		connection.execute("getChatMember", params, callback);
+	}
 	/**
 		Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
 		
@@ -137,19 +187,27 @@ class BotApi {
 		
 		Otherwise, you may use links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
 	**/
-	public inline function answerCallbackQuery(params:AnswerCallbackQueryParams, ?callback:Result<True> -> Void) connection.execute("answerCallbackQuery", params, callback);
+	public inline function answerCallbackQuery(params:AnswerCallbackQueryParams, ?callback:Result<True> -> Void) {
+		connection.execute("answerCallbackQuery", params, callback);
+	}
 	/**
 		Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	public inline function editMessageText(params:EditMessageTextParams, ?callback:Result<EitherType<Message, True>> -> Void) connection.execute("editMessageText", params, callback);
+	public inline function editMessageText(params:EditMessageTextParams, ?callback:Result<EitherType<Message, True>> -> Void) {
+		connection.execute("editMessageText", params, callback);
+	}
 	/**
 		Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	public inline function editMessageCaption(params:EditMessageCaptionParams, ?callback:Result<EitherType<Message, True>> -> Void) connection.execute("editMessageCaption", params, callback);
+	public inline function editMessageCaption(params:EditMessageCaptionParams, ?callback:Result<EitherType<Message, True>> -> Void) {
+		connection.execute("editMessageCaption", params, callback);
+	}
 	/**
 		Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	public inline function editMessageReplyMarkup(params:EditMessageReplyMarkupParams, ?callback:Result<EitherType<Message, True>> -> Void) connection.execute("editMessageReplyMarkup", params, callback);
+	public inline function editMessageReplyMarkup(params:EditMessageReplyMarkupParams, ?callback:Result<EitherType<Message, True>> -> Void) {
+		connection.execute("editMessageReplyMarkup", params, callback);
+	}
 	/**
 		Use this method to send answers to an inline query. On success, True is returned.
 		No more than 50 results per query are allowed.
@@ -157,21 +215,29 @@ class BotApi {
 		
 		Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
 	**/
-	public inline function answerInlineQuery(params:AnswerInlineQueryParams, ?callback:Result<True> -> Void) connection.execute("answerInlineQuery", params, callback);
+	public inline function answerInlineQuery(params:AnswerInlineQueryParams, ?callback:Result<True> -> Void) {
+		connection.execute("answerInlineQuery", params, callback);
+	}
 	/**
 		Use this method to send a game. On success, the sent Message is returned.
 	**/
-	public inline function sendGame(params:SendGameParams, ?callback:Result<Message> -> Void) connection.execute("sendGame", params, callback);
+	public inline function sendGame(params:SendGameParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendGame", params, callback);
+	}
 	/**
 		Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat.
 	**/
-	public inline function setGameScore(params:SetGameScoreParams, ?callback:Result<EitherType<Message, True>> -> Void) connection.execute("setGameScore", params, callback);
+	public inline function setGameScore(params:SetGameScoreParams, ?callback:Result<EitherType<Message, True>> -> Void) {
+		connection.execute("setGameScore", params, callback);
+	}
 	/**
 		Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
 		
 		This method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
 	**/
-	public inline function getGameHighScores(params:GetGameHighScoresParams, ?callback:Result<Array<GameHighScore>> -> Void) connection.execute("getGameHighScores", params, callback);
+	public inline function getGameHighScores(params:GetGameHighScoresParams, ?callback:Result<Array<GameHighScore>> -> Void) {
+		connection.execute("getGameHighScores", params, callback);
+	}
 }
 
 /**

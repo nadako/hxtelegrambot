@@ -151,7 +151,7 @@ class MethodParser {
                 access: [APublic,AInline],
                 kind: FFun({
                     args: args,
-                    expr: macro connection.execute(${{pos: pos, expr: EConst(CString(m.name))}}, $paramsExpr, callback),
+                    expr: macro { connection.execute(${{pos: pos, expr: EConst(CString(m.name))}}, $paramsExpr, callback); },
                     ret: null,
                 })
             });

@@ -1,7 +1,7 @@
 {
     "version": "0.1.0",
     "command": "haxe",
-    "args": ["build-run.hxml"],
+    "args": ["generate.hxml", "--next", "build.hxml"],
     "problemMatcher": {
         "owner": "haxe",
         "pattern": {
