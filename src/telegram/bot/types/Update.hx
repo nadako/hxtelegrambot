@@ -2,7 +2,7 @@ package telegram.bot.types;
 
 /**
 	This object represents an incoming update.
-	Only one of the optional parameters can be present in any given update.
+	At most one of the optional parameters can be present in any given update.
 **/
 typedef Update = {
 	/**
@@ -20,6 +20,16 @@ typedef Update = {
 	@:optional
 	var edited_message : Message;
 	/**
+		New incoming channel post of any kind — text, photo, sticker, etc.
+	**/
+	@:optional
+	var channel_post : Message;
+	/**
+		New version of a channel post that is known to the bot and was edited
+	**/
+	@:optional
+	var edited_channel_post : Message;
+	/**
 		New incoming inline query
 	**/
 	@:optional
@@ -34,4 +44,14 @@ typedef Update = {
 	**/
 	@:optional
 	var callback_query : CallbackQuery;
+	/**
+		New incoming shipping query. Only for invoices with flexible price
+	**/
+	@:optional
+	var shipping_query : ShippingQuery;
+	/**
+		New incoming pre-checkout query. Contains full information about checkout
+	**/
+	@:optional
+	var pre_checkout_query : PreCheckoutQuery;
 }

@@ -179,17 +179,17 @@ class MethodParser {
         content.unshift("");
         content.unshift(printer.printTypeDefinition({
             pos: pos,
-            pack: ["telegram"],
+            pack: ["telegram","bot"],
             name: "BotApi",
             kind: TDClass(),
             fields: fields,
         }, false));
 
-        content.unshift("import telegram.types.*;\n");
+        content.unshift("import telegram.bot.types.*;\n");
         content.unshift("import haxe.extern.EitherType;");
-        content.unshift("package telegram;\n");
+        content.unshift("package telegram.bot;\n");
 
-        sys.io.File.saveContent("src/telegram/BotApi.hx", content.join("\n"));
+        sys.io.File.saveContent("src/telegram/bot/BotApi.hx", content.join("\n"));
 
         // for (type in types) {
         //     var content = [];

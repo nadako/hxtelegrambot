@@ -27,7 +27,7 @@ class TypeParser {
                     d: curDoc,
                     t: {
                         pos: pos,
-                        pack: ["telegram", "types"],
+                        pack: ["telegram", "bot", "types"],
                         name: curName,
                         kind: TDStructure,
                         fields: fields
@@ -111,7 +111,7 @@ class TypeParser {
                 content.push("**/");
             }
             content.push(p.printTypeDefinition(type.t, false));
-            var filePath = 'src/telegram/types/${type.t.name}.hx';
+            var filePath = 'src/telegram/bot/types/${type.t.name}.hx';
             sys.io.File.saveContent(filePath, content.join("\n"));
         }
     }
