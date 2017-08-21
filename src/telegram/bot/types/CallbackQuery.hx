@@ -23,7 +23,7 @@ typedef CallbackQuery = {
 	@:optional
 	var inline_message_id : String;
 	/**
-		Identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
+		Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
 	**/
 	var chat_instance : String;
 	/**

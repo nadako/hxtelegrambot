@@ -22,4 +22,9 @@ typedef User = {
 	**/
 	@:optional
 	var username : String;
+	/**
+		IETF language tag of the user's language
+	**/
+	@:optional
+	var language_code : String;
 }

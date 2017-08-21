@@ -17,7 +17,7 @@ typedef Sticker = {
 	**/
 	var height : Int;
 	/**
-		Sticker thumbnail in .webp or .jpg format
+		Sticker thumbnail in the .webp or .jpg format
 	**/
 	@:optional
 	var thumb : PhotoSize;
@@ -26,6 +26,16 @@ typedef Sticker = {
 	**/
 	@:optional
 	var emoji : String;
+	/**
+		Name of the sticker set to which the sticker belongs
+	**/
+	@:optional
+	var set_name : String;
+	/**
+		For mask stickers, the position where the mask should be placed
+	**/
+	@:optional
+	var mask_position : MaskPosition;
 	/**
 		File size
 	**/

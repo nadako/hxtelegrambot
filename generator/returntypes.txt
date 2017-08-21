@@ -1,5 +1,6 @@
 getUpdates::Array<Update>
 setWebhook::Any
+deleteWebhook::Bool
 getWebhookInfo::WebhookInfo
 getMe::User
 sendMessage::Message
@@ -9,6 +10,7 @@ sendAudio::Message
 sendDocument::Message
 sendSticker::Message
 sendVideo::Message
+sendVideoNote::Message
 sendVoice::Message
 sendLocation::Message
 sendVenue::Message

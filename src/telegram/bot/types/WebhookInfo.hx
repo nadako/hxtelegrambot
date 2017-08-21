@@ -26,4 +26,14 @@ typedef WebhookInfo = {
 	**/
 	@:optional
 	var last_error_message : String;
+	/**
+		Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+	**/
+	@:optional
+	var max_connections : Int;
+	/**
+		A list of update types the bot is subscribed to. Defaults to all update types
+	**/
+	@:optional
+	var allowed_updates : Array<String>;
 }

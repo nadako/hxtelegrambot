@@ -5,7 +5,7 @@ package telegram.bot.types;
 **/
 typedef Chat = {
 	/**
-		Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+		Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
 	**/
 	var id : Int;
 	/**
@@ -37,4 +37,19 @@ typedef Chat = {
 	**/
 	@:optional
 	var all_members_are_administrators : Bool;
+	/**
+		Chat photo. Returned only in getChat.
+	**/
+	@:optional
+	var photo : ChatPhoto;
+	/**
+		Description, for supergroups and channel chats. Returned only in getChat.
+	**/
+	@:optional
+	var description : String;
+	/**
+		Chat invite link, for supergroups and channel chats. Returned only in getChat.
+	**/
+	@:optional
+	var invite_link : String;
 }

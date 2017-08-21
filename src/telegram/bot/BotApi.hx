@@ -19,10 +19,12 @@ class BotApi {
 		connection.execute("getUpdates", params, callback);
 	}
 	/**
-		Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+		Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns true.
 		
 		If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.
 		
+		
+		Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
 		Notes
 		1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.
 		2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.
@@ -32,6 +34,12 @@ class BotApi {
 	**/
 	public inline function setWebhook(params:SetWebhookParams, ?callback:Result<Any> -> Void) {
 		connection.execute("setWebhook", params, callback);
+	}
+	/**
+		Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success. Requires no parameters.
+	**/
+	public inline function deleteWebhook(?callback:Result<Bool> -> Void) {
+		connection.execute("deleteWebhook", { }, callback);
 	}
 	/**
 		Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
@@ -78,22 +86,28 @@ class BotApi {
 		connection.execute("sendDocument", params, callback);
 	}
 	/**
-		Use this method to send .webp stickers. On success, the sent Message is returned.
-	**/
-	public inline function sendSticker(params:SendStickerParams, ?callback:Result<Message> -> Void) {
-		connection.execute("sendSticker", params, callback);
-	}
-	/**
 		Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 	**/
 	public inline function sendVideo(params:SendVideoParams, ?callback:Result<Message> -> Void) {
 		connection.execute("sendVideo", params, callback);
 	}
 	/**
+		Use this method to send .webp stickers. On success, the sent Message is returned.
+	**/
+	public inline function sendSticker(params:SendStickerParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendSticker", params, callback);
+	}
+	/**
 		Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 	**/
 	public inline function sendVoice(params:SendVoiceParams, ?callback:Result<Message> -> Void) {
 		connection.execute("sendVoice", params, callback);
+	}
+	/**
+		As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
+	**/
+	public inline function sendVideoNote(params:SendVideoNoteParams, ?callback:Result<Message> -> Void) {
+		connection.execute("sendVideoNote", params, callback);
 	}
 	/**
 		Use this method to send point on the map. On success, the sent Message is returned.
@@ -114,7 +128,7 @@ class BotApi {
 		connection.execute("sendContact", params, callback);
 	}
 	/**
-		Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+		Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
 		
 		Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
 		We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
@@ -259,6 +273,11 @@ typedef GetUpdatesParams = {
 	**/
 	@:optional
 	var timeout : Int;
+	/**
+		List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used. Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
+	**/
+	@:optional
+	var allowed_updates : Array<String>;
 }
 
 /**
@@ -268,14 +287,24 @@ typedef SetWebhookParams = {
 	/**
 		HTTPS url to send updates to. Use an empty string to remove webhook integration
 	**/
-	@:optional
 	var url : String;
 	/**
 		Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
 	**/
 	@:optional
 	var certificate : InputFile;
+	/**
+		Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.
+	**/
+	@:optional
+	var max_connections : Int;
+	/**
+		List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.
+	**/
+	@:optional
+	var allowed_updates : Array<String>;
 }
+
 
 
 
@@ -302,7 +331,7 @@ typedef SendMessageParams = {
 	@:optional
 	var disable_web_page_preview : Bool;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -312,10 +341,10 @@ typedef SendMessageParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -331,12 +360,12 @@ typedef ForwardMessageParams = {
 	**/
 	var from_chat_id : EitherType<String, Int>;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
 	/**
-		Unique message identifier
+		Message identifier in the chat specified in from_chat_id
 	**/
 	var message_id : Int;
 }
@@ -350,7 +379,7 @@ typedef SendPhotoParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data.
+		Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »
 	**/
 	var photo : EitherType<String, InputFile>;
 	/**
@@ -359,7 +388,7 @@ typedef SendPhotoParams = {
 	@:optional
 	var caption : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -369,10 +398,10 @@ typedef SendPhotoParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -384,7 +413,7 @@ typedef SendAudioParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+		Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
 	**/
 	var audio : EitherType<String, InputFile>;
 	/**
@@ -408,7 +437,7 @@ typedef SendAudioParams = {
 	@:optional
 	var title : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -418,10 +447,10 @@ typedef SendAudioParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -433,7 +462,7 @@ typedef SendDocumentParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+		File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
 	**/
 	var document : EitherType<String, InputFile>;
 	/**
@@ -442,7 +471,7 @@ typedef SendDocumentParams = {
 	@:optional
 	var caption : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -452,39 +481,10 @@ typedef SendDocumentParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
-}
-
-/**
-	Parameters for the `sendSticker` method.
-**/
-typedef SendStickerParams = {
-	/**
-		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-	**/
-	var chat_id : EitherType<String, Int>;
-	/**
-		Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data.
-	**/
-	var sticker : EitherType<String, InputFile>;
-	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-	**/
-	@:optional
-	var disable_notification : Bool;
-	/**
-		If the message is a reply, ID of the original message
-	**/
-	@:optional
-	var reply_to_message_id : Int;
-	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
-	**/
-	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -496,7 +496,7 @@ typedef SendVideoParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+		Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »
 	**/
 	var video : EitherType<String, InputFile>;
 	/**
@@ -520,7 +520,7 @@ typedef SendVideoParams = {
 	@:optional
 	var caption : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -530,10 +530,39 @@ typedef SendVideoParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+}
+
+/**
+	Parameters for the `sendSticker` method.
+**/
+typedef SendStickerParams = {
+	/**
+		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+	**/
+	var chat_id : EitherType<String, Int>;
+	/**
+		Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
+	**/
+	var sticker : EitherType<String, InputFile>;
+	/**
+		Sends the message silently. Users will receive a notification with no sound.
+	**/
+	@:optional
+	var disable_notification : Bool;
+	/**
+		If the message is a reply, ID of the original message
+	**/
+	@:optional
+	var reply_to_message_id : Int;
+	/**
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+	**/
+	@:optional
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -545,7 +574,7 @@ typedef SendVoiceParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+		Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »
 	**/
 	var voice : EitherType<String, InputFile>;
 	/**
@@ -559,7 +588,7 @@ typedef SendVoiceParams = {
 	@:optional
 	var duration : Int;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -569,10 +598,49 @@ typedef SendVoiceParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+}
+
+/**
+	Parameters for the `sendVideoNote` method.
+**/
+typedef SendVideoNoteParams = {
+	/**
+		Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+	**/
+	var chat_id : EitherType<String, Int>;
+	/**
+		Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More info on Sending Files ». Sending video notes by a URL is currently unsupported
+	**/
+	var video_note : EitherType<String, InputFile>;
+	/**
+		Duration of sent video in seconds
+	**/
+	@:optional
+	var duration : Int;
+	/**
+		Video width and height
+	**/
+	@:optional
+	var length : Int;
+	/**
+		Sends the message silently. Users will receive a notification with no sound.
+	**/
+	@:optional
+	var disable_notification : Bool;
+	/**
+		If the message is a reply, ID of the original message
+	**/
+	@:optional
+	var reply_to_message_id : Int;
+	/**
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+	**/
+	@:optional
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -592,7 +660,7 @@ typedef SendLocationParams = {
 	**/
 	var longitude : Float;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -602,10 +670,10 @@ typedef SendLocationParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -638,7 +706,7 @@ typedef SendVenueParams = {
 	@:optional
 	var foursquare_id : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -648,10 +716,10 @@ typedef SendVenueParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -676,7 +744,7 @@ typedef SendContactParams = {
 	@:optional
 	var last_name : String;
 	/**
-		Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+		Sends the message silently. Users will receive a notification with no sound.
 	**/
 	@:optional
 	var disable_notification : Bool;
@@ -686,10 +754,10 @@ typedef SendContactParams = {
 	@:optional
 	var reply_to_message_id : Int;
 	/**
-		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide keyboard or to force a reply from the user.
+		Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user.
 	**/
 	@:optional
-	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardHide, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
+	var reply_markup : EitherType<ForceReply, EitherType<ReplyKeyboardRemove, EitherType<ReplyKeyboardMarkup, InlineKeyboardMarkup>>>;
 }
 
 /**
@@ -701,7 +769,7 @@ typedef SendChatActionParams = {
 	**/
 	var chat_id : EitherType<String, Int>;
 	/**
-		Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data.
+		Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
 	**/
 	var action : String;
 }

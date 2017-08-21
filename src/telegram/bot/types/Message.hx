@@ -5,7 +5,7 @@ package telegram.bot.types;
 **/
 typedef Message = {
 	/**
-		Unique message identifier
+		Unique message identifier inside this chat
 	**/
 	var message_id : Int;
 	/**
@@ -31,6 +31,11 @@ typedef Message = {
 	**/
 	@:optional
 	var forward_from_chat : Chat;
+	/**
+		For forwarded channel posts, identifier of the original message in the channel
+	**/
+	@:optional
+	var forward_from_message_id : Int;
 	/**
 		For forwarded messages, date the original message was sent in Unix time
 	**/
@@ -92,6 +97,16 @@ typedef Message = {
 	@:optional
 	var voice : Voice;
 	/**
+		Message is a video note, information about the video message
+	**/
+	@:optional
+	var video_note : VideoNote;
+	/**
+		New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+	**/
+	@:optional
+	var new_chat_members : Array<User>;
+	/**
 		Caption for the document, photo or video, 0-200 characters
 	**/
 	@:optional
@@ -152,12 +167,12 @@ typedef Message = {
 	@:optional
 	var channel_chat_created : True;
 	/**
-		The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+		The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
 	**/
 	@:optional
 	var migrate_to_chat_id : Int;
 	/**
-		The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+		The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
 	**/
 	@:optional
 	var migrate_from_chat_id : Int;
@@ -166,4 +181,14 @@ typedef Message = {
 	**/
 	@:optional
 	var pinned_message : Message;
+	/**
+		Message is an invoice for a payment, information about the invoice.
+	**/
+	@:optional
+	var invoice : Invoice;
+	/**
+		Message is a service message about a successful payment, information about the payment.
+	**/
+	@:optional
+	var successful_payment : SuccessfulPayment;
 }

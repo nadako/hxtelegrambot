@@ -33,4 +33,9 @@ typedef InlineKeyboardButton = {
 	**/
 	@:optional
 	var callback_game : CallbackGame;
+	/**
+		Specify True, to send a Pay button.
+	**/
+	@:optional
+	var pay : Bool;
 }
