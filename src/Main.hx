@@ -55,6 +55,7 @@ typedef MethodRow = {
 class Main {
 	static var reMethod = ~/^[a-z]\w+$/;
 	static var reObject = ~/^[A-Z]\w+$/;
+	static var returnTypes = ReturnTypes.read();
 
 	static function main() {
 		fetch("https://core.telegram.org/bots/api", process);
@@ -152,6 +153,9 @@ class Main {
 			}
 
 			function parseMethod() {
+				var returnType = returnTypes.get(name);
+				if (returnType == null) throw 'No return type is defind for method `$name`';
+
 				var args = new Array<FunctionArg>();
 
 				var table = getTable();
@@ -186,6 +190,11 @@ class Main {
 						type: TPath({pack: [], name: paramsName})
 					});
 				}
+
+				args.push({
+					name: "callback",
+					type: macro : $returnType->Void
+				});
 
 				methods.push({
 					pos: null,

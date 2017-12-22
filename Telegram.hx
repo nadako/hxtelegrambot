@@ -4032,7 +4032,7 @@ class BotApi {
 		
 		Notes1. This method will not work if an outgoing webhook is set up.2. In order to avoid getting duplicate updates, recalculate offset after each server response.
 	**/
-	function getUpdates(params:GetUpdatesParams):Void { }
+	function getUpdates(params:GetUpdatesParams, callback:Array<Update> -> Void):Void { }
 	/**
 		Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns true.
 		
@@ -4041,77 +4041,77 @@ class BotApi {
 		Notes1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.3. Ports currently supported for Webhooks: 443, 80, 88, 8443.
 		NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
 	**/
-	function setWebhook(params:SetWebhookParams):Void { }
+	function setWebhook(params:SetWebhookParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success. Requires no parameters.
 	**/
-	function deleteWebhook():Void { }
+	function deleteWebhook(callback:Bool -> Void):Void { }
 	/**
 		Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
 	**/
-	function getWebhookInfo():Void { }
+	function getWebhookInfo(callback:WebhookInfo -> Void):Void { }
 	/**
 		A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
 	**/
-	function getMe():Void { }
+	function getMe(callback:User -> Void):Void { }
 	/**
 		Use this method to send text messages. On success, the sent Message is returned.
 	**/
-	function sendMessage(params:SendMessageParams):Void { }
+	function sendMessage(params:SendMessageParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to forward messages of any kind. On success, the sent Message is returned.
 	**/
-	function forwardMessage(params:ForwardMessageParams):Void { }
+	function forwardMessage(params:ForwardMessageParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send photos. On success, the sent Message is returned.
 	**/
-	function sendPhoto(params:SendPhotoParams):Void { }
+	function sendPhoto(params:SendPhotoParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
 		
 		For sending voice messages, use the sendVoice method instead.
 	**/
-	function sendAudio(params:SendAudioParams):Void { }
+	function sendAudio(params:SendAudioParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	function sendDocument(params:SendDocumentParams):Void { }
+	function sendDocument(params:SendDocumentParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	function sendVideo(params:SendVideoParams):Void { }
+	function sendVideo(params:SendVideoParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
 	**/
-	function sendVoice(params:SendVoiceParams):Void { }
+	function sendVoice(params:SendVoiceParams, callback:Message -> Void):Void { }
 	/**
 		As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
 	**/
-	function sendVideoNote(params:SendVideoNoteParams):Void { }
+	function sendVideoNote(params:SendVideoNoteParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.
 	**/
-	function sendMediaGroup(params:SendMediaGroupParams):Void { }
+	function sendMediaGroup(params:SendMediaGroupParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send point on the map. On success, the sent Message is returned.
 	**/
-	function sendLocation(params:SendLocationParams):Void { }
+	function sendLocation(params:SendLocationParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	function editMessageLiveLocation(params:EditMessageLiveLocationParams):Void { }
+	function editMessageLiveLocation(params:EditMessageLiveLocationParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
 	**/
-	function stopMessageLiveLocation(params:StopMessageLiveLocationParams):Void { }
+	function stopMessageLiveLocation(params:StopMessageLiveLocationParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to send information about a venue. On success, the sent Message is returned.
 	**/
-	function sendVenue(params:SendVenueParams):Void { }
+	function sendVenue(params:SendVenueParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to send phone contacts. On success, the sent Message is returned.
 	**/
-	function sendContact(params:SendContactParams):Void { }
+	function sendContact(params:SendContactParams, callback:Message -> Void):Void { }
 	/**
 		Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
 		
@@ -4119,175 +4119,175 @@ class BotApi {
 		
 		We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
 	**/
-	function sendChatAction(params:SendChatActionParams):Void { }
+	function sendChatAction(params:SendChatActionParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
 	**/
-	function getUserProfilePhotos(params:GetUserProfilePhotosParams):Void { }
+	function getUserProfilePhotos(params:GetUserProfilePhotosParams, callback:UserProfilePhotos -> Void):Void { }
 	/**
 		Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
 		
 		Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
 	**/
-	function getFile(params:GetFileParams):Void { }
+	function getFile(params:GetFileParams, callback:File -> Void):Void { }
 	/**
 		Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
 		
 		Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group. Otherwise members may only be removed by the group's creator or by the member that added them.
 	**/
-	function kickChatMember(params:KickChatMemberParams):Void { }
+	function kickChatMember(params:KickChatMemberParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.
 	**/
-	function unbanChatMember(params:UnbanChatMemberParams):Void { }
+	function unbanChatMember(params:UnbanChatMemberParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. Returns True on success.
 	**/
-	function restrictChatMember(params:RestrictChatMemberParams):Void { }
+	function restrictChatMember(params:RestrictChatMemberParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
 	**/
-	function promoteChatMember(params:PromoteChatMemberParams):Void { }
+	function promoteChatMember(params:PromoteChatMemberParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to export an invite link to a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns exported invite link as String on success.
 	**/
-	function exportChatInviteLink(params:ExportChatInviteLinkParams):Void { }
+	function exportChatInviteLink(params:ExportChatInviteLinkParams, callback:String -> Void):Void { }
 	/**
 		Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
 		
 		Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.
 	**/
-	function setChatPhoto(params:SetChatPhotoParams):Void { }
+	function setChatPhoto(params:SetChatPhotoParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
 		
 		Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.
 	**/
-	function deleteChatPhoto(params:DeleteChatPhotoParams):Void { }
+	function deleteChatPhoto(params:DeleteChatPhotoParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
 		
 		Note: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.
 	**/
-	function setChatTitle(params:SetChatTitleParams):Void { }
+	function setChatTitle(params:SetChatTitleParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
 	**/
-	function setChatDescription(params:SetChatDescriptionParams):Void { }
+	function setChatDescription(params:SetChatDescriptionParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
 	**/
-	function pinChatMessage(params:PinChatMessageParams):Void { }
+	function pinChatMessage(params:PinChatMessageParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
 	**/
-	function unpinChatMessage(params:UnpinChatMessageParams):Void { }
+	function unpinChatMessage(params:UnpinChatMessageParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
 	**/
-	function leaveChat(params:LeaveChatParams):Void { }
+	function leaveChat(params:LeaveChatParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
 	**/
-	function getChat(params:GetChatParams):Void { }
+	function getChat(params:GetChatParams, callback:Chat -> Void):Void { }
 	/**
 		Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
 	**/
-	function getChatAdministrators(params:GetChatAdministratorsParams):Void { }
+	function getChatAdministrators(params:GetChatAdministratorsParams, callback:Array<ChatMember> -> Void):Void { }
 	/**
 		Use this method to get the number of members in a chat. Returns Int on success.
 	**/
-	function getChatMembersCount(params:GetChatMembersCountParams):Void { }
+	function getChatMembersCount(params:GetChatMembersCountParams, callback:Int -> Void):Void { }
 	/**
 		Use this method to get information about a member of a chat. Returns a ChatMember object on success.
 	**/
-	function getChatMember(params:GetChatMemberParams):Void { }
+	function getChatMember(params:GetChatMemberParams, callback:ChatMember -> Void):Void { }
 	/**
 		Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.
 	**/
-	function setChatStickerSet(params:SetChatStickerSetParams):Void { }
+	function setChatStickerSet(params:SetChatStickerSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.
 	**/
-	function deleteChatStickerSet(params:DeleteChatStickerSetParams):Void { }
+	function deleteChatStickerSet(params:DeleteChatStickerSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
 		
 		Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
 	**/
-	function answerCallbackQuery(params:AnswerCallbackQueryParams):Void { }
+	function answerCallbackQuery(params:AnswerCallbackQueryParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	function editMessageText(params:EditMessageTextParams):Void { }
+	function editMessageText(params:EditMessageTextParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	function editMessageCaption(params:EditMessageCaptionParams):Void { }
+	function editMessageCaption(params:EditMessageCaptionParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots).  On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
 	**/
-	function editMessageReplyMarkup(params:EditMessageReplyMarkupParams):Void { }
+	function editMessageReplyMarkup(params:EditMessageReplyMarkupParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in groups and supergroups.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
 	**/
-	function deleteMessage(params:DeleteMessageParams):Void { }
+	function deleteMessage(params:DeleteMessageParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to send .webp stickers. On success, the sent Message is returned.
 	**/
-	function sendSticker(params:SendStickerParams):Void { }
+	function sendSticker(params:SendStickerParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to get a sticker set. On success, a StickerSet object is returned.
 	**/
-	function getStickerSet(params:GetStickerSetParams):Void { }
+	function getStickerSet(params:GetStickerSetParams, callback:StickerSet -> Void):Void { }
 	/**
 		Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
 	**/
-	function uploadStickerFile(params:UploadStickerFileParams):Void { }
+	function uploadStickerFile(params:UploadStickerFileParams, callback:File -> Void):Void { }
 	/**
 		Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.
 	**/
-	function createNewStickerSet(params:CreateNewStickerSetParams):Void { }
+	function createNewStickerSet(params:CreateNewStickerSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to add a new sticker to a set created by the bot. Returns True on success.
 	**/
-	function addStickerToSet(params:AddStickerToSetParams):Void { }
+	function addStickerToSet(params:AddStickerToSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.
 	**/
-	function setStickerPositionInSet(params:SetStickerPositionInSetParams):Void { }
+	function setStickerPositionInSet(params:SetStickerPositionInSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to delete a sticker from a set created by the bot. Returns True on success.
 	**/
-	function deleteStickerFromSet(params:DeleteStickerFromSetParams):Void { }
+	function deleteStickerFromSet(params:DeleteStickerFromSetParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to send answers to an inline query. On success, True is returned.No more than 50 results per query are allowed.
 	**/
-	function answerInlineQuery(params:AnswerInlineQueryParams):Void { }
+	function answerInlineQuery(params:AnswerInlineQueryParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to send invoices. On success, the sent Message is returned.
 	**/
-	function sendInvoice(params:SendInvoiceParams):Void { }
+	function sendInvoice(params:SendInvoiceParams, callback:Message -> Void):Void { }
 	/**
 		If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
 	**/
-	function answerShippingQuery(params:AnswerShippingQueryParams):Void { }
+	function answerShippingQuery(params:AnswerShippingQueryParams, callback:Bool -> Void):Void { }
 	/**
 		Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. Use this method to respond to such pre-checkout queries. On success, True is returned. Note: The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
 	**/
-	function answerPreCheckoutQuery(params:AnswerPreCheckoutQueryParams):Void { }
+	function answerPreCheckoutQuery(params:AnswerPreCheckoutQueryParams, callback:Bool -> Void):Void { }
 	/**
 		Use this method to send a game. On success, the sent Message is returned.
 	**/
-	function sendGame(params:SendGameParams):Void { }
+	function sendGame(params:SendGameParams, callback:Message -> Void):Void { }
 	/**
 		Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
 	**/
-	function setGameScore(params:SetGameScoreParams):Void { }
+	function setGameScore(params:SetGameScoreParams, callback:EitherType<Message, Bool> -> Void):Void { }
 	/**
 		Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
 		
 		This method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
 	**/
-	function getGameHighScores(params:GetGameHighScoresParams):Void { }
+	function getGameHighScores(params:GetGameHighScoresParams, callback:Array<GameHighScore> -> Void):Void { }
 }
