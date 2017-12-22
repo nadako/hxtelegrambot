@@ -1,0 +1,7 @@
+-cp src
+-main Main
+-D analyzer-optimize
+-dce full
+-js main.js
+-lib hxnodejs
+-cmd node main.js
