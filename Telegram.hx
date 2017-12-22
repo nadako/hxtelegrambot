@@ -108,12 +108,6 @@ typedef SetWebhookParams = {
 
 /**
 	Contains information about the current status of a webhook.
-	
-	All types used in the Bot API responses are represented as JSON-objects.
-	
-	It is safe to use 32-bit signed integers for storing all Integer fields unless otherwise noted.
-	
-	Optional fields may be not returned when irrelevant.
 **/
 typedef WebhookInfo = {
 	/**
@@ -3469,8 +3463,6 @@ typedef InputContactMessageContent = {
 	Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 	
 	Note: It is necessary to enable inline feednack via @Botfather in order to receive these objects in updates.
-	
-	Your bot can accept payments from Telegram users. Please see the introduction to payments for more details on the process and how to set up payments for your bot. Please note that users will need Telegram v.4.0 or higher to use payments (released on May 18, 2017).
 **/
 typedef ChosenInlineResult = {
 	/**
@@ -3817,8 +3809,6 @@ typedef ShippingQuery = {
 
 /**
 	This object contains information about an incoming pre-checkout query.
-	
-	Your bot can offer users HTML5 games to play solo or to compete against each other in groups and one-on-one chats. Create games via @BotFather using the /newgame command. Please note that this kind of power requires responsibility: you will need to accept the terms for each game that your bots will be offering.
 **/
 typedef PreCheckoutQuery = {
 	/**
@@ -4240,8 +4230,6 @@ class BotApi {
 	function editMessageReplyMarkup(params:EditMessageReplyMarkupParams):Void { }
 	/**
 		Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in groups and supergroups.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.
-		
-		The following methods and objects allow your bot to handle stickers and sticker sets.
 	**/
 	function deleteMessage(params:DeleteMessageParams):Void { }
 	/**
@@ -4270,10 +4258,6 @@ class BotApi {
 	function setStickerPositionInSet(params:SetStickerPositionInSetParams):Void { }
 	/**
 		Use this method to delete a sticker from a set created by the bot. Returns True on success.
-		
-		The following methods and objects allow your bot to work in inline mode.Please see our Introduction to Inline bots for more details.
-		
-		To enable this option, send the /setinline command to @BotFather and provide the placeholder text that the user will see in the input field after typing your bot’s name.
 	**/
 	function deleteStickerFromSet(params:DeleteStickerFromSetParams):Void { }
 	/**

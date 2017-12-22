@@ -78,11 +78,11 @@ class Main {
 
 			var mode = if (reMethod.match(name)) Method else if (reObject.match(name)) Object else continue;
 
-			var docNodes = h4.nextUntil("h4", "p, blockquote");
+			var docNodes = h4.nextUntil("h4,h3,h2,h1", "p, blockquote");
 			var doc = docNodes.toArray().map(n -> c.q(n).text().trim()).filter(x -> x.length > 0).join("\n\n");
 
 			function getTable() {
-				var tableNodes = h4.nextUntil("h4", "table");
+				var tableNodes = h4.nextUntil("h4,h3,h2,h1", "table");
 				return switch tableNodes.length {
 					case 0: null;
 					case 1: tableNodes.first();
